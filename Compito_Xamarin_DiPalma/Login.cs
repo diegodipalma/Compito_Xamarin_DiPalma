@@ -5,7 +5,7 @@ using Android.OS;
 namespace Compito_Xamarin_DiPalma
 {
     [Activity(Label = "APP", MainLauncher = true)]
-    public class MainActivity : Activity
+    public class Login : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
