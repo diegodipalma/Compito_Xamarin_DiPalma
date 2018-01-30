@@ -4,7 +4,7 @@ using Android.OS;
 
 namespace Compito_Xamarin_DiPalma
 {
-    [Activity(Label = "Taskerò", MainLauncher = true)]
+    [Activity(Label = "APP", MainLauncher = true)]
     public class MainActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
