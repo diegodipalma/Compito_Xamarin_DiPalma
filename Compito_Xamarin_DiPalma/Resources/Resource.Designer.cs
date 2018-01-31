@@ -26,6 +26,8 @@ namespace Compito_Xamarin_DiPalma
 		
 		public static void UpdateIdValues()
 		{
+			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::Compito_Xamarin_DiPalma.Resource.String.ApplicationName;
+			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::Compito_Xamarin_DiPalma.Resource.String.Hello;
 		}
 		
 		public partial class Attribute
@@ -113,8 +115,14 @@ namespace Compito_Xamarin_DiPalma
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f040001
+			public const int ApplicationName = 2130968577;
+			
 			// aapt resource value: 0x7f040000
-			public const int app_name = 2130968576;
+			public const int Hello = 2130968576;
+			
+			// aapt resource value: 0x7f040002
+			public const int app_name = 2130968578;
 			
 			static String()
 			{
