@@ -84,9 +84,6 @@ namespace Compito_Xamarin_DiPalma
 			// aapt resource value: 0x7f050000
 			public const int linearLayout3 = 2131034112;
 			
-			// aapt resource value: 0x7f050008
-			public const int toolPrincipale = 2131034120;
-			
 			static Id()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -102,9 +99,6 @@ namespace Compito_Xamarin_DiPalma
 			
 			// aapt resource value: 0x7f030000
 			public const int Login = 2130903040;
-			
-			// aapt resource value: 0x7f030001
-			public const int Messaggi = 2130903041;
 			
 			static Layout()
 			{
