@@ -2,9 +2,9 @@
 using Android.Widget;
 using Android.OS;
 using System;
-using SQLite.Net;
 using System.IO;
 using System.Text.RegularExpressions;
+using Mono.Data.Sqlite;
 
 namespace Compito_Xamarin_DiPalma
 {
@@ -14,6 +14,7 @@ namespace Compito_Xamarin_DiPalma
         Button btnLogin, btnRecover;
         TextView txtMail, txtPass;
 
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -21,7 +22,7 @@ namespace Compito_Xamarin_DiPalma
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Login);
 
-            #region data binding
+            #region data binding e variabili
             btnLogin = FindViewById<Button>(Resource.Id._login);
             btnRecover = FindViewById<Button>(Resource.Id._recoverPass);
             txtMail = FindViewById<TextView>(Resource.Id._userMail);
@@ -34,6 +35,7 @@ namespace Compito_Xamarin_DiPalma
 
         private void BtnLogin_Click(object sender, EventArgs e)
         {
+            var query = "";
             #region check password con regex
             //// check sul campo password se è vuoto o meno
 
@@ -52,19 +54,18 @@ namespace Compito_Xamarin_DiPalma
                 string.IsNullOrWhiteSpace(txtPass.Text) ||
                 string.IsNullOrWhiteSpace(txtPass.Text))
             {
-                Toast.MakeText(this, "Uno o entrambi i campi\nsono vuoti!", ToastLength.Short);
+                Toast.MakeText(this, "Uno o entrambi i campi sono vuoti!", ToastLength.Short).Show();
             }
             else
             {
                 var nomedb = "data.db";
                 var path = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), nomedb);
-
-                var connString = new SQLiteConnectionString(path, false);
-                var conn = new SQLiteConnection(new SQLite.Net.Platform.XamarinAndroid.SQLitePlatformAndroid(), path, true)
+                var connStr = @"Data Source=" + path + ";Version=3;";
+                SqliteConnection connessione = new SqliteConnection(connStr);
 
                 try
                 {
-                    conn.open()
+                    connessione.Open();
                 }
                 catch (Exception ex)
                 {
@@ -73,6 +74,24 @@ namespace Compito_Xamarin_DiPalma
                     alert.SetMessage(ex.ToString());
                     alert.Show();
                 }
+
+                query = "select count(*) from users where username=@user and password=@pass";
+                SqliteCommand queryLogin = new SqliteCommand(query, connessione);
+                queryLogin.Parameters.AddWithValue("@user", txtMail.Text);
+                queryLogin.Parameters.AddWithValue("@pass", CodificaPassword(txtPass.Text, true));
+                var risultato = (Int32)queryLogin.ExecuteScalar();
+
+                if (risultato == 0)
+                {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                    alert.SetTitle("Attenzione");
+                    alert.SetMessage("Non è stato trovato nessun utente con questa combinazione di credenziali!");
+                    alert.Show();
+                    txtMail.Text = "";
+                    txtPass.Text = "";
+                }
+                else
+
             }
         }
 
@@ -81,6 +100,19 @@ namespace Compito_Xamarin_DiPalma
 
         }
 
+        public static string CodificaPassword(string password, bool isBase64)
+        {
+            if (isBase64)
+            {
+                var base64EncodedBytes = Convert.FromBase64String(password);
+                return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+            }
+            else
+            {
+                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(password);
+                return Convert.ToBase64String(plainTextBytes);
+            }
+        }
 
     }
 
