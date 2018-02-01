@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace Compito_Xamarin_DiPalma
 {
-    [Activity(Label = "Home")]
+    [Activity(Label = "Home", MainLauncher = true)]
     public class Home : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -20,6 +20,7 @@ namespace Compito_Xamarin_DiPalma
             base.OnCreate(savedInstanceState);
 
             // Create your application here
+            SetContentView(Resource.Layout.Home);
         }
     }
 }

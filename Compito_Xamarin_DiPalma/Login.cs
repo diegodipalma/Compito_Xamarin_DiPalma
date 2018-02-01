@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Compito_Xamarin_DiPalma
 {
-    [Activity(Label = "BlueChat", MainLauncher = true)]
+    [Activity(Label = "BlueChat", MainLauncher = false)]
     public class Log : Activity
     {
         string pathDB = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "bluechat.sqlite3");
